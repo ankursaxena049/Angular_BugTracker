@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug Tracker</title>
+</head>
+
+<body>
+    <h1>Bug Tracker</h1>
+    <hr>
+    <!-- bugTracker.component.html -->
+    <!-- <section class="stats">
+        <span class="closed">{{bugList | closeCount}}</span>
+        <span> / </span>
+        <span>{{bugList.length}}</span>
+    </section> -->
+    <app-bug-stats [data]="bugList"> </app-bug-stats>
+    <section class="sort">
+        <label for="">Order By :</label>&nbsp;
+        <select name="" id="" (change)="sortType = $any($event.target).value">
+            <option value="">-----Select-----</option>
+            <option value="id">Id</option>
+            <option value="name">Name</option>
+            <option value="isClosed">Status</option>
+            <option value="cretedAt">Created date</option>
+        </select>&nbsp;
+        <label for="">Descending ? :</label>&nbsp;&nbsp;
+        <input type="checkbox" name="" id="" (change)="sortDesc = $any($event.target).checked">
+    </section>
+    <!-- <section class="edit">
+        <label for="">Bug Name :</label>&nbsp;
+        <input type="text" name="" (keyup)="newBugName = $any($event.target).value">&nbsp;
+        <input type="button" value="Add New" (click)="addBugsonClick()">
+    </section> -->
+    <app-bug-edit (bugCreated)="onNewBugCreated($event)"></app-bug-edit>
+    <section class="list">
+        <ol>
+            <li *ngFor="let bug of (bugList | sort:sortType:sortDesc)">
+                <div class="datetime">{{bug.id}}</div>
+                <span class="bugname" (click)="onBugNameClick(bug)" [ngClass]="{closed : bug.isClosed}"
+                    [title]="bug.name">
+                    {{bug.name | trimText}}</span>
+                <div class="datetime" [title]="bug.createdAt | date:'medium'">{{bug.createdAt | momentTime}}</div>
+                <div class="datetime">{{bug.isClosed | status}}</div>
+                <input type="button" value="Remove" (click)="removeBugOnClick(bug)">
+            </li>
+        </ol>
+        <input type="button" value="Remove Closed" (click)="removeAllBugOnClick()">
+    </section>
+</body>
+</html>
