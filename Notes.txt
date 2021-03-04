@@ -1,0 +1,174 @@
+Rich Internet Applications
+    Better User Experience (Desktop Apps)
+
+ES6 (ECMAScript 6 / ES2015 / ESNext)
+
+1. let
+2. const
+3. Array destructuring
+4. Rest operator (Array)
+5. Spread operator (Array)
+6. Object destructuring
+7. Rest operator (Object)
+8. Spread operator (Object)
+9. Default arguments
+10. Arrow functions
+11. template strings
+12. Symbol
+13. Iterators
+14. Classes
+
+class Employee{
+    id = 0;
+    name = '';
+    salary = 0;
+
+    constructor(id, name, salary){
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+    }
+    display(){
+        console.log(`Id = ${this.id}, Name = ${this.name} and Salary = ${this.salary}`);
+    }
+}
+
+class FullTimeEmployee extends Employee{
+    benefits = '';
+    constructor(id, name, salary, benefits){
+        super(id, name, salary);
+        this.benefits = benefits
+    }
+}
+
+http://es6-features.org
+
+
+TypeScript
+    JavaScript is loosely typed
+
+var x : number = 10;
+
+function add(x : number, y : number) : number {
+    return x + y;
+}
+
+add('sadfs',10)
+
+    |
+    |
+    V
+    tsc
+    |
+    |
+    V
+
+var x  = 10;
+
+function add(x , y )  {
+    return x + y;
+}
+
+interfaces
+enums
+Classes
+Arrow functions
+Generics
+Access Modifiers
+
+http://typescriptlang.org
+
+
+Angular Building Blocks
+    - Module
+        Registry of other application entities (Components, Directives, Pipes, Services & Modules)
+        There can be any number of modules in an application
+        There has to be a minimum of 1 module
+        Application intialization happens through a module
+        Dependency Injection is built in
+
+    - Component
+        Represents one minor UI concern of the application
+        Encapsulates Presntation(View) + Interaction Behavior(Controller) + State(Model)
+        Application is a composition of components
+        Components can communicate to each other (provided they are accessible)
+
+    - Directive
+        Low level DOM manipulation
+        2 types
+            attribute directive
+                - manipulates the attributes of existing dom nodes
+                - DO NOT change the structure of the DOM tree
+                - syntax : used with []
+                - ex: ngClass
+
+            structural directive
+                - CHANGES the structure of the DOM tree (by adding new dom nodes / removing existing dom nodes)
+                - syntax : used by prefixing with '*'
+                - ex: ngIf
+
+    - Pipe
+        Data transformation for presentation
+        Offers performance benefits 
+
+    - Service
+        Encapsulate NON UI responsibilities of the application
+
+Setup An Angular Application
+    Angular CLI
+    Node.js
+
+
+
+From the application folder
+    npm start
+
+Day-01 Assignment
+JavaScript Array Methods:
+    filter
+    map
+    reduce
+    forEach
+
+Creating a component (manual)
+    1. Create the files for the component (greeter)
+        /app
+            /greeter
+                greeter.component.ts
+                greeter.component.html
+                greeter.component.css
+
+    2. Write the component class (greeter.component.ts)
+
+        import { Component } from '@angular/core'
+        @Component({
+            selector : 'app-greeter',
+            templateUrl : 'greeter.component.html',
+            styleUrls : ['greeter.component.css']
+        })
+        export class GreeterComponent{
+            /* component state & behavior goes here */
+        }
+
+    3. Register the component in the app.module.ts
+        import { GreeterComponent } from './greeter/greeter.component'
+
+        @NgModule({
+            declarations : [..., GreeterComponent],
+            bootstrap : [..., GreeterComponent] //If we want the greeter component to be the root component
+        })
+
+    4. Update the index.html to include the newly created component (greeter)
+
+Creating a component (using angular cli)
+    In the terminal
+        ng generate component greeter (OR) ng g c greeter
+
+
+ES6 Module
+    1. Anything defined in a file (JS/TS) is considered PRIVATE to that file
+    2. Any public entity has to be explicitly EXPORTED
+    3. Any public entity from another file has to be explicitly IMPORTED
+
+To use an external liberary (moment)
+    ng add moment
