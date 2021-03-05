@@ -32,11 +32,7 @@ export class BugApiOperationService {
         return bugList.filter(bug => !bug.isClosed);
     }
 
-    getBugCloseCout(bugList: Bug[]): number {
-        return bugList.reduce((result, bug) => bug.isClosed ? result + 1 : result, 0);
-    }
     getallBugs(): Observable<Bug[]> {
         return this.bugApiServcei.getAllBugs();
     }
-
 }

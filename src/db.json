@@ -21,8 +21,14 @@
     {
       "id": 6,
       "name": "Application is not responding",
-      "isClosed": false,
+      "isClosed": true,
       "createdAt": "2021-02-05T07:01:32.030Z"
+    },
+    {
+      "id": 7,
+      "name": "Unable to login in the system",
+      "isClosed": true,
+      "createdAt": "2021-03-05T09:08:31.884Z"
     }
   ],
   "projects": [

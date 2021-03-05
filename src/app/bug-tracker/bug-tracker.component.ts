@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Bug } from './models/Bug';
 import { BugApiOperationService } from './services/BugApiOperation.service';
+import { BugOperationService } from './services/BugOperation.service';
 
 @Component({
   selector: 'app-bug-tracker',
@@ -14,7 +15,7 @@ export class BugTrackerComponent implements OnInit {
   sortDesc: boolean = false;
   newBugName: string = '';
 
-  constructor(private bugApiOperation: BugApiOperationService) { }
+  constructor(private bugOperation: BugOperationService, private bugApiOperation: BugApiOperationService) { }
 
   ngOnInit(): void {
     // this.bugList.push({ id: 3, name: 'Data integrity checks failed', isClosed: true, createdAt: new Date() });
@@ -88,8 +89,6 @@ export class BugTrackerComponent implements OnInit {
 
     //return this.bugList.reduce((result, bug) => bug.isClosed ? result + 1 : result, 0);
 
-    //return this.bugOperation.getBugCloseCout(this.bugList);
-
-    return this.bugApiOperation.getBugCloseCout(this.bugList);
+    return this.bugOperation.getBugCloseCout(this.bugList);
   }
 }

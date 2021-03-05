@@ -17,10 +17,11 @@ export class BugServerStorageService {
             return this.httpClient.put<Bug>(`http://localhost:3000/bugs/${bug.id}`, bug);
         }
     }
+
     removeBug(bug: Bug): Observable<any> {
         return this.httpClient.delete<Bug>(`http://localhost:3000/bugs/${bug.id}`);
-
     }
+
     getAllBugs(): Observable<Bug[]> {
         return this.httpClient.get<Bug[]>('http://localhost:3000/bugs');
     }

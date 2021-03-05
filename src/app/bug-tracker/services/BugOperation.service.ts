@@ -1,12 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Bug } from "../models/Bug";
-import { BugServerStorageService } from "./BugApi.service";
 import { BugLocalStorageService } from "./BugStorage.service";
 
 @Injectable()
 export class BugOperationService {
 
-    private currentBudId: number = 0;
     constructor(private bugLocalStorage: BugLocalStorageService) { }
 
     createNewBug(newBug: string): Bug {
@@ -35,6 +33,7 @@ export class BugOperationService {
     getBugCloseCout(bugList: Bug[]): number {
         return bugList.reduce((result, bug) => bug.isClosed ? result + 1 : result, 0);
     }
+
     getallBugsFromLocalStorage() {
         return this.bugLocalStorage.getAllBugs();
     }
