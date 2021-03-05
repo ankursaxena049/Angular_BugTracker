@@ -1,11 +1,13 @@
 import { Bug } from "../models/Bug";
+import { Injectable } from "@angular/core";
 
-export class BugStorageService {
+@Injectable()
+export class BugLocalStorageService {
 
     private localStore = window.localStorage;
     private currentBugId: number = 0;
 
-    saveBugtoLocalStorage(bug: Bug): Bug {
+    saveBug(bug: Bug): Bug {
         if (bug.id === 0) {
             bug.id = ++this.currentBugId;
         }
@@ -13,12 +15,12 @@ export class BugStorageService {
         return bug;
     }
 
-    removeBugFromLocalStorage(bug: Bug) {
+    removeBug(bug: Bug) {
         this.localStore.removeItem(`bug-${bug.id}`.toString());
-        return this.getAllBugsFromLocalStorage();
+        return this.getAllBugs();
     }
 
-    getAllBugsFromLocalStorage(): Bug[] {
+    getAllBugs(): Bug[] {
         let result: Bug[] = [];
         for (let index = 0, count = this.localStore.length; index < count; index++) {
             const key = this.localStore.key(index);

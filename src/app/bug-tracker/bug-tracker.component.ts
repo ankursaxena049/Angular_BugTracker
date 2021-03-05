@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Bug } from './models/Bug';
-import { BugOperationService } from './services/BugOperation.service';
+import { BugApiOperationService } from './services/BugApiOperation.service';
 
 @Component({
   selector: 'app-bug-tracker',
@@ -14,7 +14,7 @@ export class BugTrackerComponent implements OnInit {
   sortDesc: boolean = false;
   newBugName: string = '';
 
-  constructor(private bugOperation: BugOperationService) { }
+  constructor(private bugApiOperation: BugApiOperationService) { }
 
   ngOnInit(): void {
     // this.bugList.push({ id: 3, name: 'Data integrity checks failed', isClosed: true, createdAt: new Date() });
@@ -22,15 +22,11 @@ export class BugTrackerComponent implements OnInit {
     // this.bugList.push({ id: 4, name: 'Application not responding', isClosed: false, createdAt: new Date() });
     // this.bugList.push({ id: 2, name: 'Server communication failure', isClosed: true, createdAt: new Date() });
 
-    this.bugList = this.bugOperation.getallBugsFromLocalStorage();
-  }
+    //this.bugList = this.bugOperation.getallBugsFromLocalStorage();
 
-  addBugsonClick() {
-    if (this.newBugName != '') {
-      this.bugList.push(this.bugOperation.createNewBug(this.newBugName));
-    } else {
-      alert('Please provide Bug Details');
-    }
+    this.bugApiOperation
+      .getallBugs()
+      .subscribe(bugList => this.bugList = bugList);
   }
 
   onNewBugCreated(newBug: Bug) {
@@ -42,7 +38,13 @@ export class BugTrackerComponent implements OnInit {
     //this.bugList.splice(index, 1);
     //this.bugList = this.bugList.filter(bug => bug.id !== bugToClose.id);
 
-    this.bugList = this.bugOperation.removeBug(bugToClose);
+    //this.bugList = this.bugOperation.removeBug(bugToClose);
+
+    this.bugApiOperation
+      .removeBug(bugToClose)
+      .subscribe(() =>
+        this.bugList = this.bugList.filter(bug => bug.id !== bugToClose.id)
+      )
   }
 
   removeAllBugOnClick() {
@@ -50,7 +52,7 @@ export class BugTrackerComponent implements OnInit {
     //this.bugList = this.bugOperation.removeClosedBugs(this.bugList);
     this.bugList
       .filter(bug => bug.isClosed)
-      .forEach(closedBug => this.removeBugOnClick(closedBug))
+      .forEach(closedBug => this.removeBugOnClick(closedBug));
   }
 
   onBugNameClick(bugToToggle: Bug) {
@@ -58,7 +60,12 @@ export class BugTrackerComponent implements OnInit {
     //const toggledBug = { ...bugToToggle, isClosed: !bugToToggle.isClosed };
     //this.bugList = this.bugList.map(bug => bug.id === bugToToggle.id ? toggledBug : bug);
 
-    this.bugList = this.bugOperation.toggleBug(bugToToggle, this.bugList);
+    //this.bugList = this.bugOperation.toggleBug(bugToToggle, this.bugList);
+    this.bugApiOperation
+      .toggleBug(bugToToggle)
+      .subscribe(toggledBug => {
+        this.bugList = this.bugList.map(bug => bug.id === bugToToggle.id ? toggledBug : bug);
+      });
   }
 
   getBugCloseCount(): number {
@@ -81,6 +88,8 @@ export class BugTrackerComponent implements OnInit {
 
     //return this.bugList.reduce((result, bug) => bug.isClosed ? result + 1 : result, 0);
 
-    return this.bugOperation.getBugCloseCout(this.bugList);
+    //return this.bugOperation.getBugCloseCout(this.bugList);
+
+    return this.bugApiOperation.getBugCloseCout(this.bugList);
   }
 }

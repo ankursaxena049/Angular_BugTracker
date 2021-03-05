@@ -6,10 +6,12 @@ import { BugTrackerComponent } from './bug-tracker/bug-tracker.component';
 import { BugEditComponent } from './bug-tracker/components/bug-edit.component';
 import { BugStatsComponent } from './bug-tracker/components/bug-stats.component';
 import { BugOperationService } from './bug-tracker/services/BugOperation.service';
-import { BugStorageService } from './bug-tracker/services/BugStorage.service';
+import { BugLocalStorageService } from './bug-tracker/services/BugStorage.service';
 import { CloseCountPipe } from './util/pipe/CloseCount.pipe';
 import { UtilsModule } from './util/utils.module';
-
+import { HttpClientModule } from '@angular/common/http';
+import { BugServerStorageService } from './bug-tracker/services/BugApi.service';
+import { BugApiOperationService } from './bug-tracker/services/BugApiOperation.service';
 
 @NgModule({
   declarations: [
@@ -22,11 +24,14 @@ import { UtilsModule } from './util/utils.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    UtilsModule
+    UtilsModule,
+    HttpClientModule
   ],
   providers: [
     BugOperationService,
-    BugStorageService
+    BugLocalStorageService,
+    BugServerStorageService,
+    BugApiOperationService
   ],
   bootstrap: [AppComponent]
 })
